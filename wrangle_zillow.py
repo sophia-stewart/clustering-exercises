@@ -86,6 +86,13 @@ def handle_missing_values(df, prop_req_col, prop_req_row):
     df = df.dropna(thresh=prop_req_row*len(df.columns))
     return df
 
+def label_fips(zillow):
+    zillow['fips'] = zillow.fips.astype(int)
+    zillow['fips_loc'] = zillow.fips.replace({6037:'Los Angeles, CA',
+                       6059:'Orange, CA',
+                       6111:'Ventura, CA'})
+    return zillow
+
 def wrangle_zillow(prop_req_col, prop_req_row):
     '''
     This function wrangles zillow data. It takes in thresholds for null values which are
@@ -93,4 +100,5 @@ def wrangle_zillow(prop_req_col, prop_req_row):
     '''
     zillow = handle_missing_values(only_single_units(acquire_zillow()), prop_req_col, prop_req_row)
     zillow = zillow.drop(columns=['unitcnt', 'propertylandusetypeid']).dropna()
+    zillow = label_fips(zillow)
     return zillow
