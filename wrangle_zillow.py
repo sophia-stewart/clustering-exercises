@@ -22,8 +22,8 @@ def acquire_zillow():
         return zillow
     else:        
         sql = '''
-            SELECT bathroomcnt, bedroomcnt, calculatedfinishedsquarefeet, fips, fullbathcnt, latitude,
-                   longitude, roomcnt, yearbuilt, taxvaluedollarcnt, logerror, transactiondate, 
+            SELECT bathroomcnt as baths, bedroomcnt as beds, calculatedfinishedsquarefeet as sq_ft, fips, fullbathcnt as fullbaths, latitude,
+                   longitude, roomcnt as rooms, yearbuilt, taxvaluedollarcnt as tax_value, garagecarcnt, logerror, transactiondate, 
                    unitcnt, propertylandusetypeid
             FROM properties_2017
             LEFT JOIN predictions_2017 pred USING(parcelid)
